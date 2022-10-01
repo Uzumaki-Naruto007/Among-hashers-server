@@ -119,7 +119,7 @@ function ServerRemainingTimeLoop(){
 setInterval(ServerGameLoop, 16);
 setInterval(ServerRemainingTimeLoop, 1000); 
 
-const server = app.listen(process.env.PORT || 5000, () => {
+const server = http.listen(process.env.PORT || 5000, () => {
   const port = server.address().port;
   console.log(`Express is working on port ${port}`);
 });
