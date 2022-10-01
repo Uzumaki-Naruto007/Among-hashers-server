@@ -15,7 +15,6 @@ const io = require('socket.io')(http, {
 io.on('connection', (socket) => {
   const roomId = socket.handshake.query.room;
   const playerName = socket.handshake.query.name || 'anonymous';
-  console.log(roomId);
   console.log('player connected');
   if(ROOM_STATE[roomId]){
     ROOM_STATE[roomId].CLIENTS.push({id:socket.id, x:PLAYER_START_X, y:PLAYER_START_Y});
@@ -87,7 +86,6 @@ function ServerGameLoop(){
         var dy = ROOM_STATE[roomId].CLIENTS[id].y - bullet.y;
         var dist = Math.sqrt(dx * dx + dy * dy);
         if(dist < 20){
-          console.log(dist);
           ROOM_STATE[roomId].SCORES[bullet.owner_id] +=1;
           io.in(roomId).emit('player-hit',ROOM_STATE[roomId].CLIENTS[id].id, ROOM_STATE[roomId].SCORES, ROOM_STATE[roomId].NAMES[bullet.owner_id], ROOM_STATE[roomId].NAMES); // Tell everyone this player got hit
         }
@@ -95,7 +93,6 @@ function ServerGameLoop(){
     }
     //|| bullet.x < -10000 || bullet.x > 10000 || bullet.y < -10000 || bullet.y > 10000
     // Remove if it goes too far off screen 
-    console.log(bullet.x, bullet.y);
     if(bullet.x < -5000 || bullet.x > 5000 || bullet.y < -5000 || bullet.y > 5000){
       ROOM_STATE[roomId].bullet_array.splice(i,1);
         i--;
