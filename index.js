@@ -113,7 +113,7 @@ function ServerRemainingTimeLoop(){
     io.in(roomId).emit("time-remaining",ROOM_STATE[roomId].TIME_REMAINING, ROOM_STATE[roomId].SCORES);
   }
 }
-setInterval(ServerGameLoop, 100);
+setInterval(ServerGameLoop, 40);
 setInterval(ServerRemainingTimeLoop, 1000); 
 
 const server = http.listen(process.env.PORT || 5000, () => {
