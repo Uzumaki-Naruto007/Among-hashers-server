@@ -33,7 +33,7 @@ io.on('connection', (socket) => {
   io.to(socket.id).emit('id', {id:socket.id, name:ROOM_STATE[roomId].NAMES[socket.id], otherClients: ROOM_STATE[roomId].CLIENTS, room:roomId});
   socket.to(roomId).emit('new player', { id:socket.id });
   socket.on('disconnect', () => {
-    ROOM_STATE[roomId].CLIENTS.splice(ROOM_STATE[roomId].CLIENTS.indexOf((client)=>client.id === socket.id), 1);
+    ROOM_STATE[roomId].CLIENTS.splice(ROOM_STATE[roomId].CLIENTS.map((client)=>client.id).indexOf(socket.id), 1);
     socket.to(roomId).emit('delete player', { id:socket.id });
     console.log('player disconnected');
     delete ROOM_STATE[roomId].SCORES[socket.id];
